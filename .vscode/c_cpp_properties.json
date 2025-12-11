@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/zin-lin-htun/devs/phd/hotlab_phd/lab_ws/install/annex_msgs/include/**",
+        "/home/zin-lin-htun/fstn/install/eufs_msgs/include/**",
+        "/home/zin-lin-htun/fstn/fstn_msgs_tool_ws/install/fs_msgs/include/**",
+        "/home/zin-lin-htun/fstn/fstn_msgs_tool_ws/install/ackermann_msgs/include/**",
+        "/home/zin-lin-htun/fstn/fstn_ws/install/fstn_msgs/include/**",
+        "/opt/ros/jazzy/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

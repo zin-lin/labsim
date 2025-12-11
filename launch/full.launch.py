@@ -1,0 +1,141 @@
+"""
+Author: Zin Lin Htun
+class: Launch
+"""
+
+
+# import necessaries
+import os
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+# import descriptions
+from launch_ros.actions import Node
+import xacro
+
+PKG_SRC = 'labsim'
+MODELS_SRC = 'urdf'
+WORLDS_SRC = 'worlds'
+ROBOT = 'adsmt-wheeled.xacro'
+ROLLE = 'roll-e-per.xacro'
+CONES_TEST_WORLD = 'cones_test.sdf'
+EASY_WORLD = "easy.sdf"
+START_WORLD = "start.sdf"
+
+def generate_launch_description():
+    robot_name = "ads-mt"
+    rolle_name = "roll-e"
+    name_package = "labsim"
+
+    # full file path
+    robot_file = os.path.join(get_package_share_directory(name_package), PKG_SRC, MODELS_SRC, ROBOT)
+
+    # ROLL-E
+    rolle = os.path.join(get_package_share_directory(name_package), PKG_SRC, MODELS_SRC, ROLLE )
+
+    # full world paths
+    world = os.path.join(get_package_share_directory(name_package), WORLDS_SRC, EASY_WORLD)
+
+    # gazebo launcher
+    gazebo_ros_launch = PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('ros_gz_sim'),
+                                                                   'launch',  'gz_sim.launch.py'))
+    # gazebo launch empty world
+    gazebo_launch_des = IncludeLaunchDescription(gazebo_ros_launch,
+                                                 launch_arguments={'gz_args':[f'-r -v -v4 {world}'],
+                                                                   'on_exit_shutdown':'true'}.items())
+    robot_xml = xacro.process_file(robot_file).toxml()
+
+    rolle_xml = xacro.process_file(rolle).toxml()
+
+    # gazebo node
+    spawn_model_gazebo = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-name', robot_name,
+            '-topic', 'robot_description'
+        ],
+        output='screen'
+    )
+
+    # gazebo node
+    spawn_rolle_gazebo = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-name', rolle_name,
+            '-topic', 'roll_e_description'
+        ],
+        output='screen'
+    )
+
+    # use robot state publisher
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        output='screen',
+        parameters=[{'robot_description': robot_xml,
+                     'use_sim_time': True
+                     }],
+    )
+
+    rolle_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        output='screen',
+        parameters=[{'robot_description': rolle_xml,
+                     'use_sim_time': True
+                     }],
+    )
+
+    # get bridge
+    bridge_file = os.path.join(get_package_share_directory(name_package),'labsim',"parameters", "bridge_parameters.yaml")
+
+    # bridge command
+    gazebo_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=["--ros-args",
+                   '-p',f'config_file:={bridge_file}',
+                   ],
+        output='screen',
+    )
+
+    # vcu_node = Node(
+    #     package='vehicle_control_package',
+    #     executable='vehicle_control',
+    #     output='both', # both means both log files and terminal
+    # )
+
+    # imu_node = Node(
+    #     package='motion_package',
+    #     executable='imu',
+    #     output='both', # both means both log files and terminal
+    # )
+
+    # odometry_node = Node(
+    #     package='motion_package',
+    #     executable='odometry',
+    #     output='both',  # both means both log files and terminal
+    # )
+
+
+    # empty launch_des
+    launch_description = LaunchDescription()
+
+    # gazebo launch
+    launch_description.add_action(gazebo_launch_des)
+
+    # launch extra components
+    launch_description.add_action(spawn_rolle_gazebo)
+    launch_description.add_action(rolle_state_publisher)
+    # launch_description.add_action(gazebo_bridge)
+    # launch_description.add_action(vcu_node)
+    # launch_description.add_action(odometry_node)
+    # launch_description.add_action(imu_node)
+
+    return launch_description
+
+

@@ -1,0 +1,321 @@
+<?xml version="1.0" ?>
+
+<!-- Robot -->
+<robot>
+
+    <gazebo>
+        <!-- render engine set -->
+        <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+
+        <!-- Broadcasters -->
+        <plugin
+            filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster">
+        </plugin>
+    </gazebo>
+
+    <!-- body -->
+    <gazebo reference="body">
+        
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/White</name>
+          </script>
+        </material>
+        <sensor type="depth_camera" name="camera_sensor">
+          <topic>perception</topic>
+          <pose>-0.12 0 -0.43 0 0.12 3.142</pose>
+          <always_on>1</always_on>
+          <update_rate>10</update_rate>
+          <enable_metrics>true</enable_metrics>
+          <camera>
+            <pose>0 0 0 0 0 0</pose>
+            <horizontal_fov>1.45</horizontal_fov>
+            <image>
+              <width>1620</width>
+              <height>600</height>
+              <format>R_FLOAT32</format>
+              <anti_aliasing>4</anti_aliasing>
+            </image>
+
+            <camera_info_topic>__default__</camera_info_topic>
+            <trigger_topic></trigger_topic>
+            <triggered>false</triggered>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>10</far>
+            </clip>
+            <save enabled='false'>
+              <path>__default__</path>
+            </save>
+            <visibility_mask>4294967295</visibility_mask>
+            <noise>
+              <type>none</type>
+              <mean>0</mean>
+              <stddev>0</stddev>
+            </noise>
+            <distortion>
+              <k1>0</k1>
+              <k2>0</k2>
+              <k3>0</k3>
+              <p1>0</p1>
+              <p2>0</p2>
+              <center>0.5 0.5</center>
+            </distortion>
+            <lens>
+              <type>stereographic</type>
+              <scale_to_hfov>true</scale_to_hfov>
+              <cutoff_angle>1.5707963267948966</cutoff_angle>
+              <env_texture_size>256</env_texture_size>
+            </lens>
+            <optical_frame_id></optical_frame_id>
+          </camera>
+        </sensor>
+
+    </gazebo>
+
+
+    <!-- Leg 1 -->
+    <gazebo reference="joint_1_link">
+
+    </gazebo>
+
+    <gazebo reference="joint_1_thigh">
+        
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Black</name>
+          </script>
+        </material>
+    </gazebo>
+
+    <gazebo reference="joint_1_shin">
+        
+        <material>
+            <mu1>2.5</mu1>
+            <mu2>2.5</mu2>
+        </material>
+    </gazebo>
+    <!-- /Leg 1 -->
+
+    <!-- Leg 2 -->
+    <gazebo reference="joint_2_link">
+        
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+    </gazebo>
+
+    <gazebo reference="joint_2_thigh">
+        
+    </gazebo>
+
+    <gazebo reference="joint_2_shin">
+        
+        <material>
+          <script>
+            <mu1>2.5</mu1>
+            <mu2>2.5</mu2>
+          </script>
+        </material>
+    </gazebo>
+    <!-- /Leg 2 -->
+
+    <!-- Leg 3 -->
+    <gazebo reference="joint_3_link">
+        
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+    </gazebo>
+
+    <gazebo reference="joint_3_thigh">
+        
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Black</name>
+          </script>
+        </material>
+    </gazebo>
+
+    <gazebo reference="joint_3_shin">
+        
+        <material>
+            <mu1>2.5</mu1>
+            <mu2>2.5</mu2>
+        </material>
+    </gazebo>
+    <!-- /Leg 3 -->
+
+    <!-- Leg 4 -->
+    <gazebo reference="joint_4_link">
+        
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+    </gazebo>
+
+    <gazebo reference="joint_4_thigh">
+        
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Black</name>
+          </script>
+        </material>
+    </gazebo>
+
+    <gazebo reference="joint_4_shin">
+        
+        <material>
+            <mu1>2.5</mu1>
+            <mu2>2.5</mu2>
+        </material>
+    </gazebo>
+    <!-- /Leg 4 -->
+
+    <!-- plugins -->
+    <gazebo>
+
+        <!-- Joint State Controller -->
+        <plugin filename='gz-sim-joint-state-publisher-system' name='gz::sim::systems::JointStatePublisher'>
+            <topic>joint_states</topic>
+            <joint_name>joint_1</joint_name>
+            <joint_name>joint_1_1</joint_name>
+            <joint_name>joint_1_1_1</joint_name>
+            <joint_name>joint_2</joint_name>
+            <joint_name>joint_2_1</joint_name>
+            <joint_name>joint_2_1_1</joint_name>
+            <joint_name>joint_3</joint_name>
+            <joint_name>joint_3_1</joint_name>
+            <joint_name>joint_3_1_1</joint_name>
+            <joint_name>joint_4</joint_name>
+            <joint_name>joint_4_1</joint_name>
+            <joint_name>joint_4_1_1</joint_name>
+        </plugin>
+
+        <!-- Joint Position Controller Plugins for Each Legs -->
+        <!-- Leg 1 -->
+        <plugin filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_1</joint_name>
+            <topic>model/ads-mt/joint/joint_1/0/cmd_pos</topic>
+            <use_velocity_commands>1</use_velocity_commands>
+            <cmd_max>1</cmd_max>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_1_1</joint_name>
+            <topic>model/ads-mt/joint/joint_1_1/0/cmd_pos</topic>
+            <use_velocity_commands>1</use_velocity_commands>
+            <cmd_max>1</cmd_max>
+
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_1_1_1</joint_name>
+            <topic>model/ads-mt/joint/joint_1_1_1/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+        <!-- /Leg 1 -->
+
+        <!-- Leg 2 -->
+        <plugin filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_2</joint_name>
+            <topic>model/ads-mt/joint/joint_2/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_2_1</joint_name>
+            <topic>model/ads-mt/joint/joint_2_1/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_2_1_1</joint_name>
+            <topic>model/ads-mt/joint/joint_2_1_1/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+        <!-- /Leg 2 -->
+
+        <!-- Leg 3 -->
+        <plugin filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_3</joint_name>
+            <topic>model/ads-mt/joint/joint_3/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_3_1</joint_name>
+            <topic>model/ads-mt/joint/joint_3_1/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_3_1_1</joint_name>
+            <topic>model/ads-mt/joint/joint_3_1_1/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+        <!-- /Leg 3 -->
+
+        <!-- Leg 4 -->
+        <plugin filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_4</joint_name>
+            <topic>model/ads-mt/joint/joint_4/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_4_1</joint_name>
+            <topic>model/ads-mt/joint/joint_4_1/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+            <joint_name>joint_4_1_1</joint_name>
+            <topic>model/ads-mt/joint/joint_4_1_1/0/cmd_pos</topic>
+            <cmd_max>1</cmd_max>
+            <use_velocity_commands>1</use_velocity_commands>
+        </plugin>
+        <!-- /Leg 4 -->
+
+
+        <!-- /Broadcasters -->
+    </gazebo>
+    <!-- /plugins -->
+</robot>

@@ -1,0 +1,144 @@
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_1_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_1_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_1_1_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_1_1_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/wheel_1/cmd_vel"
+  gz_topic_name: "model/ads-mt/joint/wheel_1/cmd_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_2/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_2/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_2_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_2_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_2_1_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_2_1_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/wheel_2/cmd_vel"
+  gz_topic_name: "model/ads-mt/joint/wheel_2/cmd_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_3/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_3/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_3_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_3_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_3_1_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_3_1_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/wheel_3/cmd_vel"
+  gz_topic_name: "model/ads-mt/joint/wheel_3/cmd_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_4/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_4/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+# Joints GZ -> ROS
+- ros_topic_name:  "adsmt/joint_states"
+  gz_topic_name: "joint_states"
+  ros_type_name: "sensor_msgs/msg/JointState"
+  gz_type_name: "gz.msgs.Model"
+  direction: GZ_TO_ROS
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_4_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_4_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/joint_4_1_1/x/cmd_pos"
+  gz_topic_name: "model/ads-mt/joint/joint_4_1_1/0/cmd_pos"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+
+# Joint Controller ROS -> GZ
+- ros_topic_name: "model/adsmt/joint/wheel_4/cmd_vel"
+  gz_topic_name: "model/ads-mt/joint/wheel_4/cmd_vel"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
+
+# IMU Data GZ -> ROS
+- ros_topic_name: "model/adsmt/imu"
+  gz_topic_name: "model/ads-mt/imu"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS
+
+# Odometer Data GZ -> ROS
+- ros_topic_name: "model/adsmt/odometry"
+  gz_topic_name: "model/ads-mt/odometry"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
