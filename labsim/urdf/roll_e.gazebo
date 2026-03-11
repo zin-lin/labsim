@@ -28,15 +28,15 @@
           <topic>perception</topic>
           <!-- <pose>-0.05 -0.0025 0.14955 0 0.0 3.142</pose> -->
           <always_on>1</always_on>
-          <update_rate>30</update_rate>
+          <update_rate>5.5</update_rate>
           <enable_metrics>true</enable_metrics>
           <camera>
             <pose>0 0 0 0 0 0</pose>
-            <horizontal_fov>1.45</horizontal_fov>
+            <horizontal_fov>1.39626</horizontal_fov>
             <image>
-              <width>480</width>
-              <height>480</height>
-              <format>R_FLOAT32</format>
+              <width>256</width>
+              <height>256</height>
+              <format>R_FLOAT16</format>
               <anti_aliasing>4</anti_aliasing>
             </image>
 
@@ -45,7 +45,7 @@
             <triggered>false</triggered>
             <clip>
               <near>0.10000000000000001</near>
-              <far>10</far>
+              <far>22</far>
             </clip>
             <save enabled='false'>
               <path>__default__</path>
@@ -82,9 +82,9 @@
     </gazebo>
 
     <gazebo reference="camera01">
-            <sensor type="camera" name="rgb_camera_sensor">
+          <sensor type="camera" name="rgb_camera_sensor">
           <always_on>true</always_on>
-          <update_rate>30</update_rate>
+          <update_rate>5.5</update_rate>
           <visualize>true</visualize>
           <!-- relative to the camera link, usually zero -->
           <pose>0 0 0 0 0 0</pose>
@@ -93,14 +93,14 @@
             <horizontal_fov>1.2</horizontal_fov>
 
             <image>
-              <width>640</width>
-              <height>480</height>
+              <width>256</width>
+              <height>256</height>
               <format>R8G8B8</format>  <!-- RGB8 -->
             </image>
 
             <clip>
               <near>0.1</near>
-              <far>20.0</far>
+              <far>40.0</far>
             </clip>
 
             <save enabled="false">
@@ -116,7 +116,93 @@
           <topic>camera</topic>
         </sensor>
 
+
     </gazebo>
+
+    <gazebo reference="d_lidar">
+        <sensor name="front_lidar" type="gpu_lidar">
+          <pose>0 0 0 0 0 0</pose>
+          <topic>model/roll-e/laser_scan</topic>
+          <update_rate>5.5</update_rate>
+          <gz_frame_id>d_lidar</gz_frame_id>
+
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>280</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.142</min_angle>
+                <max_angle>3.142</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>18</samples>
+                <min_angle>-0.83775804</min_angle>
+                <max_angle> 0.83775804</max_angle>
+              </vertical>
+            </scan>
+
+            <range>
+              <min>0.02</min>
+              <max>30.0</max>
+              <resolution>0.1</resolution>
+            </range>
+
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+          </lidar>
+
+          <!-- REQUIRED for Harmonic -->
+          <always_on>true</always_on>
+          <visualize>false</visualize>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference = "UTL2">
+      <sensor name="unitree_l2_slice" type="gpu_lidar">
+        <always_on>true</always_on>
+        <frameName>base_link</frameName>
+
+
+        <!-- Slice update rate (NOT full 360 scan rate) -->
+        <update_rate>666</update_rate>
+
+        <!-- Topic name in Gazebo transport -->
+        <topic>model/roll-e/L2</topic>
+        <gz_frame_id>UTL2</gz_frame_id>
+
+        <lidar>
+          <scan>
+            <horizontal>
+              <!-- 3° wedge total: -1.5°..+1.5° -->
+              <!-- Keep this small if you want ~12k-ish points per revolution -->
+              <samples>2</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.02617994</min_angle>
+              <max_angle> 0.02617994</max_angle>
+            </horizontal>
+
+            <vertical>
+              <!-- 96° vertical: -48°..+48° -->
+              <samples>96</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.83775804</min_angle>
+              <max_angle> 0.83775804</max_angle>
+            </vertical>
+          </scan>
+
+          <range>
+            <!-- Spec screenshot: blind area 0.05 m -->
+            <min>0.05</min>
+            <max>30.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </lidar>
+      </sensor>
+    </gazebo>
+
 
     <!-- plugins -->
     <gazebo>
@@ -130,6 +216,15 @@
             <joint_name>mr</joint_name>
             <joint_name>rr</joint_name>
             <joint_name>rl</joint_name>
+            <joint_name>lidar_spin_joint</joint_name>
+        </plugin>
+
+        <!--Lidar-->
+       <plugin
+             filename="gz-sim-joint-controller-system"
+             name="gz::sim::systems::JointController">
+             <joint_name>lidar_spin_joint</joint_name>
+             <initial_velocity>34.87</initial_velocity>
         </plugin>
 
         <!--WHEELS-->

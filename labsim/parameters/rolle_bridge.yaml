@@ -69,6 +69,33 @@
   gz_type_name: "gz.msgs.Odometry"
   direction: GZ_TO_ROS
 
+# LaserScan Data GZ -> ROS
+- ros_topic_name: "a_a_v/ads_roll_e/laser_scan"
+  gz_topic_name: "model/roll-e/laser_scan"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "a_a_v/ads_roll_e/laser_scan/points"
+  gz_topic_name: "model/roll-e/laser_scan/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "a_a_v/ads_roll_e/L2/points"
+  gz_topic_name: "model/roll-e/L2/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+
+- ros_topic_name: "a_a_v/ads_roll_e/perception/points"
+  gz_topic_name: "perception/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
+
+
 # World Control
 - ros_topic_name: "a_a_v/world/easy/control"
   gz_topic_name: "world/easy/control"
@@ -86,6 +113,12 @@
 # Perception
 - ros_topic_name: "a_a_v/ads_roll_e/perception"
   gz_topic_name: "perception"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/camera"
+  gz_topic_name: "camera"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
   direction: GZ_TO_ROS

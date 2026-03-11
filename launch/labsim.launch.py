@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 import xacro
@@ -14,10 +14,9 @@ ROLLE = 'roll_e.xacro'
 CONES_TEST_WORLD = 'cones_test.sdf'
 EASY_WORLD = 'easy.sdf'
 START_WORLD = 'start.sdf'
-WORLD = "easy"
+WORLD = "wh"
 
 def generate_launch_description():
-    robot_name = "ads-mt"
     rolle_name = "roll-e"
     name_package = "labsim"
 
@@ -65,17 +64,6 @@ def generate_launch_description():
     # robot_xml = xacro.process_file(robot_file).toxml()
     rolle_xml = xacro.process_file(rolle_file).toxml()
 
-    # Spawn main robot
-    spawn_model_gazebo = Node(
-        package='ros_gz_sim',
-        executable='create',
-        arguments=[
-            '-name', robot_name,
-            '-topic', 'robot_description',
-        ],
-        output='screen',
-    )
-
     # Spawn ROLL-E
     spawn_rolle_gazebo = Node(
         package='ros_gz_sim',
@@ -87,16 +75,7 @@ def generate_launch_description():
         output='screen',
     )
 
-    # # Robot state publishers
-    # robot_state_publisher = Node(
-    #     package='robot_state_publisher',
-    #     executable='robot_state_publisher',
-    #     output='screen',
-    #     parameters=[{
-    #         'robot_description': robot_xml,
-    #         'use_sim_time': True,
-    #     }],
-    # )
+
 
     rolle_state_publisher = Node(
         package='robot_state_publisher',
@@ -106,6 +85,9 @@ def generate_launch_description():
             'robot_description': rolle_xml,
             'use_sim_time': True,
         }],
+        remappings=[
+        ('/joint_states', '/a_a_v/ads_roll_e/joint_states'),
+    ],
     )
 
     vcu = Node(
@@ -121,14 +103,34 @@ def generate_launch_description():
             'depth_topic': 'a_a_v/ads_roll_e/perception',
             'imu_topic': 'a_a_v/ads_roll_e/imu'
         }]
-        
-        )
-
+    )
 
     control = Node(
         package="control_package",
         executable= "rolle",
+        output="screen"
+    )
+
+    bev = Node(
+        package="control_package",
+        executable= "bevpo",
         output="screen")
+
+    recd = Node(
+        package="control_package",
+        executable= "rec_depth",
+        output="screen")
+    
+    recr = Node(
+        package="control_package",
+        executable= "rec_rgb",
+        output="screen")
+
+    recp = Node(
+        package="control_package",
+        executable= "rec_pc2",
+        output="screen")
+
 
     # Bridge config (this may fail at runtime if path is wrong, but it won't break parsing)
    
@@ -160,7 +162,12 @@ def generate_launch_description():
 
 
     ld = LaunchDescription()
-
+    # ---------------- GPU STUFF ADDED HERE ----------------
+    # Forces Gazebo rendering + gpu_lidar to use NVIDIA GPU (especially on Optimus laptops).
+    # (Physics remains CPU; this is for rendering/sensors.)
+    ld.add_action(SetEnvironmentVariable('__NV_PRIME_RENDER_OFFLOAD', '1'))
+    ld.add_action(SetEnvironmentVariable('__GLX_VENDOR_LIBRARY_NAME', 'nvidia'))
+    ld.add_action(SetEnvironmentVariable('LIBGL_ALWAYS_SOFTWARE', '0'))
     # Gazebo
     ld.add_action(gazebo_launch_des)
 
@@ -174,8 +181,11 @@ def generate_launch_description():
 
     ld.add_action(rolle_bridge)
     ld.add_action(vcu)
-    ld.add_action(hpc)
+    # ld.add_action(hpc)
     ld.add_action(control)
+    ld.add_action(recd)
+    ld.add_action(recr)
+    ld.add_action(recp)
 
     return LaunchDescription(ld.entities)
     # or simply: `return ld`

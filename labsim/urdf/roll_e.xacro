@@ -39,6 +39,42 @@
 
     <!--CAMERAS-->
 
+    <joint name="lidar_mount" type="fixed">
+        <origin xyz = "-0.158 -0.0025 0.1599" rpy=" 0 0.0 3.142"/>
+        <parent link="chassis"/>
+        <child link="d_lidar"/>
+    </joint>
+
+    <link name="d_lidar">
+       <inertial>
+            <mass value="0.01"/>
+            <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+       </inertial>
+    </link>
+
+        <!-- Continuous spin joint (Z axis) -->
+    <joint name="lidar_spin_joint" type="continuous">
+        <limit lower="-3.1415" upper="3.1415" effort="150" velocity="50.0"/>
+        <parent link="chassis"/>
+        <child link="UTL2"/>
+
+        <!-- adjust this pose if the lidar is offset from chassis -->
+        <origin xyz = "-0.158 -0.0025 0.1599" rpy=" 0 0.0 3.142"/>
+
+        <!-- spin about +Z -->
+        <axis xyz="0 0 1"/>
+
+        <dynamics damping="0.0" friction="0.0"/>
+    </joint>
+
+    <link name="UTL2">
+       <inertial>
+            <mass value="0.01"/>
+            <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+       </inertial>
+    </link>
+
+
     <joint name="camera_mount" type="fixed">
         <origin xyz = "-0.15 -0.0025 0.14955" rpy=" 0 0.0 3.142"/>
         <parent link="chassis"/>
@@ -54,7 +90,7 @@
 
 
     <joint name="camera_mount_01" type="fixed">
-        <origin xyz = "0.15 -0.0025 0.14955" rpy=" 0 0.0 3.142"/>
+        <origin xyz = "-0.15 -0.0025 0.14955" rpy=" 0 0.0 3.142"/>
         <parent link="chassis"/>
         <child link="camera01"/>
     </joint>
